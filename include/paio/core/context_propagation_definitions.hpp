@@ -25,7 +25,8 @@ enum class ContextType {
     POSIX_META = 2,
     LSM_KVS_SIMPLE = 3,
     LSM_KVS_DETAILED = 4,
-    KVS = 5
+    KVS = 5,
+    MUTATIO = 6
 };
 
 // ------------------------------------------------------------------------------------
@@ -245,6 +246,17 @@ enum class KVS {
 const int kvs_size = 10;
 
 // ------------------------------------------------------------------------------------
+
+/**
+ * MUTATIO definitions.
+ * Defines the operation type of transformations (encode or decode)
+ */
+enum class MUTATIO {
+   encode = 1,
+   decode = 2
+};
+
+const int mutatio_size = 2;
 
 } // namespace paio::core
 

@@ -37,7 +37,7 @@ static const int kPatchVersion = PAIO_PATCH;
  *  TODO: Tasks pending completion -@ricardomacedo at 9/27/2022, 2:39:52 PM
  *  - support EnforcementObjectType compression (comp) and encryption (enc)
  */
-enum class EnforcementObjectType { drl = 1, noop = 0 };
+enum class EnforcementObjectType { drl = 1, compression = 2, encryption = 3, noop = 0 };
 
 /**
  * CommunicationType enum class.

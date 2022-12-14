@@ -174,6 +174,16 @@ PStatus ChannelDefault::create_enforcement_object (const long& enforcement_objec
                 std::make_unique<NoopObject> (enforcement_object_id));
             break;
 
+        case EnforcementObjectType::compression:
+            status = this->m_submission_queue.create_enforcement_object (hash_value,
+                std::make_unique<CompressionObject> (enforcement_object_id));
+            break;
+
+        case EnforcementObjectType::encryption:
+            status = this->m_submission_queue.create_enforcement_object (hash_value,
+                std::make_unique<EncryptionObject> (enforcement_object_id));
+            break;
+
         default:
             status = PStatus::NotSupported ();
             break;

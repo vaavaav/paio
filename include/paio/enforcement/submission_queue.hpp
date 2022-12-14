@@ -14,6 +14,8 @@
 #include <paio/enforcement/objects/drl/enforcement_object_drl.hpp>
 #include <paio/enforcement/objects/enforcement_object.hpp>
 #include <paio/enforcement/objects/noop/enforcement_object_noop.hpp>
+#include <paio/enforcement/objects/mutatio/enforcement_object_compression.hpp>
+#include <paio/enforcement/objects/mutatio/enforcement_object_encryption.hpp>
 #include <queue>
 #include <sstream>
 #include <thread>

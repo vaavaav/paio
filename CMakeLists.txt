@@ -106,6 +106,8 @@ target_sources(
     ${PROJECT_SOURCE_DIR}/include/paio/enforcement/ticket.hpp
     ${PROJECT_SOURCE_DIR}/include/paio/enforcement/objects/enforcement_object.hpp
     ${PROJECT_SOURCE_DIR}/include/paio/enforcement/objects/noop/enforcement_object_noop.hpp
+    ${PROJECT_SOURCE_DIR}/include/paio/enforcement/objects/mutatio/enforcement_object_compression.hpp
+    ${PROJECT_SOURCE_DIR}/include/paio/enforcement/objects/mutatio/enforcement_object_encryption.hpp
     ${PROJECT_SOURCE_DIR}/include/paio/enforcement/objects/drl/enforcement_object_drl.hpp
     ${PROJECT_SOURCE_DIR}/include/paio/enforcement/objects/drl/enforcement_object_drl_options.hpp
     ${PROJECT_SOURCE_DIR}/include/paio/enforcement/objects/drl/token_bucket.hpp
@@ -150,6 +152,8 @@ target_sources(
     src/enforcement/submission_queue.cpp
     src/enforcement/ticket.cpp
     src/enforcement/objects/noop/enforcement_object_noop.cpp
+    src/enforcement/objects/mutatio/enforcement_object_compression.cpp
+    src/enforcement/objects/mutatio/enforcement_object_encryption.cpp
     src/enforcement/objects/drl/enforcement_object_drl.cpp
     src/enforcement/objects/drl/token_bucket_statistics.cpp
     src/enforcement/objects/drl/token_bucket.cpp
@@ -195,6 +199,18 @@ endif ()
 FetchContent_MakeAvailable(spdlog)
 set_target_properties(spdlog PROPERTIES POSITION_INDEPENDENT_CODE ON)
 target_link_libraries(paio spdlog)
+
+# ---------------------------------------------------------------------------- #
+# > snappy --- compression library
+
+FetchContent_Declare(snappy
+        URL https://github.com/google/snappy/archive/1.1.8.tar.gz
+        UPDATE_COMMAND ""
+        INSTALL_COMMAND ""
+)
+FetchContent_MakeAvailable(snappy)
+set_target_properties(snappy PROPERTIES SNAPPY_BUILD_TESTS OFF)
+target_link_libraries(paio snappy)
 
 # ---------------------------------------------------------------------------- #
 # > gflags --- commandline flag processing library
