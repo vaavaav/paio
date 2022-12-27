@@ -213,6 +213,17 @@ set_target_properties(snappy PROPERTIES SNAPPY_BUILD_TESTS OFF)
 target_link_libraries(paio snappy)
 
 # ---------------------------------------------------------------------------- #
+# > aes-xts --- encryption library
+
+FetchContent_Declare(aesxts
+        GIT_REPOSITORY https://github.com/rgmacedo/AES_XTS_OpenSSL_example.git
+        GIT_TAG origin/main
+)
+
+FetchContent_MakeAvailable(aesxts)
+target_link_libraries(paio aesxts)
+
+# ---------------------------------------------------------------------------- #
 # > gflags --- commandline flag processing library
 
 if (PAIO_BUILD_BENCHMARKS)

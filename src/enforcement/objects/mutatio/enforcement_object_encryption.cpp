@@ -3,6 +3,7 @@
  **/
 
 #include <paio/enforcement/objects/mutatio/enforcement_object_encryption.hpp>
+#include <aesxts/xts/xts.hpp>
 
 namespace paio::enforcement {
 
@@ -44,8 +45,15 @@ void EncryptionObject::obj_enforce (const Ticket& ticket, Result& result)
 
     // if the Ticket contains request's data/metadata, it will be copied to the Result object
     if (has_content) {
-        result.set_content_size (ticket.get_buffer_size ());
-        result.set_content (ticket.get_buffer_size (), ticket.get_buffer ());
+        auto tweak = ticket.get_payload();
+        switch (static_cast<paio::core::MUTATIO> (ticket.get_operation_type ())) {
+            case MUTATIO::encode:
+                xts_encode (this->key, (unsigned char*) (&tweak), result.get_content(), static_cast<unsigned char*>(ticket.get_buffer()), ticket.get_buffer_size());
+                break;
+            case MUTATIO::decode:
+                xts_decode (this->key, (unsigned char*) (&tweak), result.get_content(), static_cast<unsigned char*>(ticket.get_buffer()), ticket.get_buffer_size());
+                break;
+        }
     }
 }
 

@@ -45,8 +45,17 @@ void CompressionObject::obj_enforce (const Ticket& ticket, Result& result)
 
     // if the Ticket contains request's data/metadata, it will be copied to the Result object
     if (has_content) {
-        result.set_content_size (ticket.get_buffer_size ());
-        result.set_content (ticket.get_buffer_size (), ticket.get_buffer ());
+        std::string s; 
+        switch (static_cast<paio::core::MUTATIO>(ticket.get_operation_type())) {
+            case MUTATIO::encode:
+                snappy::Compress((const char*) ticket.get_buffer(), ticket.get_buffer_size(), &s);
+                break;
+            case MUTATIO::decode:
+                snappy::Uncompress((const char*) ticket.get_buffer(), ticket.get_buffer_size(), &s);
+                break;
+        }
+        result.set_content(s.length(), (const unsigned char*) s.data());
+        result.set_content_size(s.length());
     }
 }
 

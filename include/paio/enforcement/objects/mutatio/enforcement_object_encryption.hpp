@@ -14,6 +14,8 @@ class EncryptionObject : public EnforcementObject {
 
 private:
     long m_object_id { 0 };
+    /* A 512 bit key */
+    unsigned char * key { (unsigned char *) "0123456789012345678901234567890123456789012345678901234567890123" };
 
 public:
     /**
