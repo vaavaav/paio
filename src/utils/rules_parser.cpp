@@ -121,7 +121,16 @@ HousekeepingOperation RulesParser::convert_housekeeping_operation (
 // convert_object_type call. Convert a string to the respective EnforcementObjectType.
 EnforcementObjectType RulesParser::convert_object_type (const std::string& object_type) const
 {
-    return (object_type == "drl") ? EnforcementObjectType::drl : EnforcementObjectType::noop;
+    switch (paio::utils::hash (object_type.data())) {
+        case "drl"_: 
+            return EnforcementObjectType::drl;
+        case "compression"_:
+            return EnforcementObjectType::compression;
+        case "encryption"_:
+            return EnforcementObjectType::encryption;
+        default:
+            return EnforcementObjectType::noop;
+    }
 }
 
 // convertEnforcementOperation call. Convert a string to an enforcement operation.
@@ -165,6 +174,8 @@ long RulesParser::convert_context_type_definition (const std::string& context_ty
             return static_cast<long> (ContextType::LSM_KVS_DETAILED);
         case "kvs"_:
             return static_cast<long> (ContextType::KVS);
+        case "mutatio"_:
+            return static_cast<long> (ContextType::MUTATIO);
         default:
             return -1;
     }
@@ -188,9 +199,25 @@ long RulesParser::convert_differentiation_definitions (const std::string& contex
             return this->convert_posix_lsm_detailed_definitions (definition);
         case "kvs"_:
             return this->convert_kvs_definitions (definition);
+        case "mutatio"_:
+            return this->convert_mutatio_definitions (definition);
         default:
             return -1;
     }
+}
+
+long RulesParser::convert_mutatio_definitions (const std::string& general_definitions) const {
+    switch (paio::utils::hash(general_definitions.data ())) {
+        case "encode"_:
+            return static_cast<long> (MUTATIO::encode);
+        case "decode"_:
+            return static_cast<long> (MUTATIO::decode);
+        default:
+            throw std::runtime_error (
+                "Unknown MUTATIO function (hint: the request-type/request-context field does "
+                "not match with the available elements of the chosen context-definition.)");
+    }
+
 }
 
 // convert_paio_general_definitions call. Convert PAIO_GENERAL differentiation definitions from

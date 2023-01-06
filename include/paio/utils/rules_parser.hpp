@@ -172,6 +172,14 @@ private:
      */
     [[nodiscard]] long convert_kvs_definitions (const std::string& kvs_definitions) const;
 
+    /**
+     * convert_mutatio_definitions: Convert MUTATIO differentiation definitions from a string-based format
+     * to the corresponding long value.
+     * @param mutatio_definitions String-based definition of a MUTATIO element for the I/O differentiation.
+     * @return Returns the corresponding long value of the I/O definition.
+     */
+    [[nodiscard]] long convert_mutatio_definitions (const std::string& mutatio_definitions) const;
+
 public:
     /**
      * RulesFileParser default constructor.
