@@ -84,6 +84,7 @@ Ticket ChannelDefault::build_ticket (const Context& request_context,
             request_context.get_total_operations (),
             static_cast<long> (
                 request_context.get_operation_size () * request_context.get_total_operations ()),
+            request_context.get_tweak (),
             request_context.get_operation_type (),
             request_context.get_operation_context (),
             size,
@@ -99,6 +100,7 @@ Ticket ChannelDefault::build_ticket (const Context& request_context,
         return { this->gen_ticket_id (),
             request_context.get_total_operations (),
             static_cast<long> (operation_size * request_context.get_total_operations ()),
+            request_context.get_tweak (),
             request_context.get_operation_type (),
             request_context.get_operation_context () };
     }

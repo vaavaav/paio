@@ -33,6 +33,7 @@ class Context {
 
 private:
     long m_workflow_id { -1 };
+    long m_tweak { 0 };
     int m_operation_type { static_cast<int> (PAIO_GENERAL::no_op) };
     int m_operation_context { static_cast<int> (PAIO_GENERAL::no_op) };
     uint64_t m_operation_size { 0 };
@@ -49,11 +50,13 @@ public:
      * Context parameterized constructor.
      */
     Context (const long& workflow_id,
+        const long& tweak,
         const int& operation_type,
         const int& operation_context,
         const uint64_t& operation_size,
         const int& total_operations) :
         m_workflow_id { workflow_id },
+        m_tweak { tweak },
         m_operation_type { operation_type },
         m_operation_context { operation_context },
         m_operation_size { operation_size },
@@ -72,6 +75,15 @@ public:
     [[nodiscard]] long get_workflow_id () const
     {
         return this->m_workflow_id;
+    }
+
+    /**
+     * get_tweak: Get Context's I/O tweak.
+     * @return Return a copy of m_tweak classifier.
+     */
+    [[nodiscard]] long get_tweak () const
+    {
+        return this->m_tweak;
     }
 
     /**

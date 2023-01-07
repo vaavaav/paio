@@ -14,11 +14,13 @@ Ticket::Ticket () = default;
 Ticket::Ticket (const uint64_t& ticket_id,
     const int& total_operations,
     const long& payload,
+    const long& tweak,
     const int& type,
     const int& context) :
     m_ticket_id { ticket_id },
     m_operations { total_operations },
     m_payload { payload },
+    m_tweak { tweak },
     m_operation_type { type },
     m_operation_context { context }
 { }
@@ -27,6 +29,7 @@ Ticket::Ticket (const uint64_t& ticket_id,
 Ticket::Ticket (const uint64_t& ticket_id,
     const int& total_operations,
     const long& payload,
+    const long& tweak,
     const int& type,
     const int& context,
     const std::size_t& size,
@@ -47,6 +50,7 @@ Ticket::Ticket (const Ticket& ticket) :
     m_ticket_id { ticket.m_ticket_id },
     m_operations { ticket.m_operations },
     m_payload { ticket.m_payload },
+    m_tweak { ticket.m_tweak },
     m_operation_type { ticket.m_operation_type },
     m_operation_context { ticket.m_operation_context },
     m_buffer_size { ticket.m_buffer_size }
@@ -62,6 +66,7 @@ Ticket& Ticket::operator= (const Ticket& ticket)
         this->m_ticket_id = ticket.m_ticket_id;
         this->m_operations = ticket.m_operations;
         this->m_payload = ticket.m_payload;
+        this->m_tweak = ticket.m_tweak;
         this->m_operation_type = ticket.m_operation_type;
         this->m_operation_context = ticket.m_operation_context;
         this->m_buffer_size = ticket.m_buffer_size;
@@ -98,6 +103,12 @@ long Ticket::get_payload () const
     return this->m_payload;
 }
 
+// get_tweak call. Get Ticket's I/O tweak.
+long Ticket::get_tweak () const
+{
+    return this->m_tweak;
+}
+
 // get_operation_type call. Get Ticket's I/O operation type.
 int Ticket::get_operation_type () const
 {
@@ -129,6 +140,7 @@ std::string Ticket::to_string () const
     stream << this->m_ticket_id << ", ";
     stream << this->m_operations << ", ";
     stream << this->m_payload << ", ";
+    stream << this->m_tweak << ", ";
     stream << this->m_operation_type << ", ";
     stream << this->m_operation_context;
 

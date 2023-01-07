@@ -45,6 +45,7 @@ private:
     uint64_t m_ticket_id { 0 };
     int m_operations { 0 };
     long m_payload { 1 };
+    long m_tweak { 0 };
     int m_operation_type { static_cast<int> (PAIO_GENERAL::no_op) };
     int m_operation_context { static_cast<int> (PAIO_GENERAL::no_op) };
     std::size_t m_buffer_size { 0 };
@@ -68,6 +69,7 @@ public:
     Ticket (const uint64_t& ticket_id,
         const int& total_operations,
         const long& payload,
+        const long& tweak,
         const int& operation_type,
         const int& operation_context);
 
@@ -85,6 +87,7 @@ public:
     Ticket (const uint64_t& ticket_id,
         const int& total_operations,
         const long& payload,
+        const long& tweak,
         const int& operation_type,
         const int& operation_context,
         const std::size_t& size,
@@ -127,6 +130,12 @@ public:
      * @return Returns a copy of m_payload.
      */
     [[nodiscard]] long get_payload () const;
+
+    /**
+     * get_tweak: Get Ticket's I/O tweak.
+     * @return Returns a copy of m_tweak.
+     */
+    [[nodiscard]] long get_tweak () const;
 
     /**
      * get_operation_type: Get Ticket's operation type of the I/O request.
