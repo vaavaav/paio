@@ -64,6 +64,7 @@ private:
         for (uint64_t i = 0; i < iterations; i++) {
             // create Context object
             Context context { static_cast<long> (i),
+                0,
                 static_cast<int> (operation_type),
                 static_cast<int> (operation_context),
                 1,

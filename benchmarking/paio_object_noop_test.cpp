@@ -53,6 +53,7 @@ public:
                 static_cast<uint64_t> (i), // ticket-id
                 1, // total operations
                 1, // payload
+                0,
                 static_cast<int> (PAIO_GENERAL::no_op), // operation type
                 static_cast<int> (PAIO_GENERAL::no_op) // operation context
             };
@@ -90,6 +91,7 @@ public:
                 static_cast<uint64_t> (i), // ticket-id
                 1, // total operations
                 1 * operation_size, // payload
+                0,
                 static_cast<int> (PAIO_GENERAL::no_op), // operation type
                 static_cast<int> (PAIO_GENERAL::no_op), // operation context
                 static_cast<std::size_t> (operation_size), // operation size

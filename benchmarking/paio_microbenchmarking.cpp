@@ -69,6 +69,7 @@ ThreadResults stress_test (FILE* fd,
         // (PAIO_GENERAL::Noop), operation (PAIO_GENERAL::Noop), operation size, and total
         // operations
         paio::core::Context context { (workflow_id * 1000),
+            0,
             static_cast<int> (paio::core::PAIO_GENERAL::no_op),
             static_cast<int> (paio::core::PAIO_GENERAL::no_op),
             static_cast<uint64_t> (operation_size),

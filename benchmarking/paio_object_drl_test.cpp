@@ -214,6 +214,7 @@ public:
                     static_cast<uint64_t> (i), // ticket-id
                     1, // total operations
                     size, // operation size
+                    0,
                     static_cast<int> (PAIO_GENERAL::no_op), // operation type
                     static_cast<int> (PAIO_GENERAL::no_op) // operation context
                 };

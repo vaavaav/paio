@@ -109,6 +109,7 @@ private:
     {
         // create Context object
         auto context_obj = posix_instance->build_context_object (workflow_id,
+            0,
             operation_type,
             operation_context,
             operation_size,
