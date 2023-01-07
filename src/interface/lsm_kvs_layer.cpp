@@ -35,10 +35,12 @@ LsmKvsLayer::LsmKvsLayer (std::shared_ptr<PaioStage> stage_ptr, const long& defa
 // LsmKvsLayer parameterized constructor.
 LsmKvsLayer::LsmKvsLayer (std::shared_ptr<PaioStage> stage_ptr,
     const long& default_workflow_id,
+    const long& default_tweak,
     const int& default_operation_type,
     const int& default_operation_context) :
     InstanceInterface (std::move (stage_ptr),
         default_workflow_id,
+        default_tweak,
         default_operation_type,
         default_operation_context)
 {
@@ -109,6 +111,7 @@ Context LsmKvsLayer::build_context_object ()
     std::lock_guard<std::mutex> guard (this->m_lock);
     // build Context object
     return this->build_context_object (this->m_default_workflow_id,
+        this->m_default_tweak,
         this->m_default_operation_type,
         this->m_default_operation_context,
         1,
@@ -117,6 +120,7 @@ Context LsmKvsLayer::build_context_object ()
 
 // build_context_object call. Build Context containing all I/O classifiers to enforce request.
 Context LsmKvsLayer::build_context_object (const long& workflow_id,
+    const long& tweak,
     const int& operation_type,
     const int& operation_context,
     const uint64_t& operation_size,
@@ -124,6 +128,7 @@ Context LsmKvsLayer::build_context_object (const long& workflow_id,
 {
     // build Context object
     return Context { workflow_id,
+        tweak,
         operation_type,
         operation_context,
         operation_size,

@@ -68,6 +68,7 @@ public:
      */
     PaioInstance (std::shared_ptr<PaioStage> stage_ptr,
         const long& default_workflow_id,
+        const long& default_tweak,
         const int& default_operation_type,
         const int& default_operation_context);
 
@@ -82,6 +83,11 @@ public:
      * @param workflow_id New value to be set in m_default_workflow_id.
      */
     void set_default_workflow_id (const long& workflow_id) override;
+
+    /**
+     * @param tweak
+     */
+    void set_default_tweak (const long& tweak) override;
 
     /**
      * set_default_operation_type: Set new value in the default operation type parameter.
@@ -149,6 +155,7 @@ public:
      * This method is lock-free.
      * @param workflow_id Defines the workflow identifier used to submit the request (from the
      * application to the data plane stage).
+     * @param tweak 
      * @param operation_type Defines the type of the submitted operation (from the application to
      * the data plane stage).
      * @param operation_context Defines the context of the submitted operation (from the application
@@ -158,6 +165,7 @@ public:
      * @return Returns the respective Context object (following an RVO mechanism).
      */
     Context build_context_object (const long& workflow_id,
+        const long& tweak,
         const int& operation_type,
         const int& operation_context,
         const uint64_t& operation_size,

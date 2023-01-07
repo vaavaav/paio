@@ -43,6 +43,7 @@ class InstanceInterface {
 protected:
     std::shared_ptr<PaioStage> m_paio_stage { nullptr };
     long m_default_workflow_id { -1 };
+    long m_default_tweak { 0 };
     std::string m_default_secondary_workflow_identifier { "workflow" };
     int m_default_operation_type { static_cast<int> (PAIO_GENERAL::no_op) };
     int m_default_operation_context { static_cast<int> (PAIO_GENERAL::no_op) };
@@ -55,6 +56,14 @@ protected:
     virtual void set_default_workflow_id (const long& workflow_id)
     {
         this->m_default_workflow_id = workflow_id;
+    }
+
+    /**
+     * @param tweak 
+     */
+    virtual void set_default_tweak (const long& tweak)
+    {
+        this->m_default_tweak = tweak;
     }
 
     /**
@@ -97,6 +106,15 @@ protected:
     [[nodiscard]] long get_default_workflow_id () const
     {
         return this->m_default_workflow_id;
+    }
+
+    /**
+     * get_default_tweak: 
+     * @return Returns a copy of the m_tweak parameter.
+     */
+    [[nodiscard]] long get_default_tweak () const
+    {
+        return this->m_default_tweak;
     }
 
     /**
@@ -161,10 +179,12 @@ public:
      */
     InstanceInterface (std::shared_ptr<PaioStage> stage_ptr,
         const long& workflow_id,
+        const long& tweak,
         const int& operation_type,
         const int& operation_context) :
         m_paio_stage { std::move (stage_ptr) },
         m_default_workflow_id { workflow_id },
+        m_default_tweak {tweak},
         m_default_operation_type { operation_type },
         m_default_operation_context { operation_context }
     {
@@ -199,6 +219,7 @@ public:
      * Optimization (RVO).
      */
     virtual Context build_context_object (const long& workflow_id,
+        const long& tweak, 
         const int& operation_type,
         const int& operation_context,
         const uint64_t& operation_size,

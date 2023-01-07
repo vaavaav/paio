@@ -35,10 +35,12 @@ PosixLayer::PosixLayer (std::shared_ptr<PaioStage> stage_ptr, const long& defaul
 // PosixLayer parameterized constructor.
 PosixLayer::PosixLayer (std::shared_ptr<PaioStage> stage_ptr,
     const long& default_workflow_id,
+    const long& default_tweak,
     const int& default_operation_type,
     const int& default_operation_context) :
     InstanceInterface { std::move (stage_ptr),
         default_workflow_id,
+        default_tweak,
         default_operation_type,
         default_operation_context }
 {
@@ -94,6 +96,7 @@ Context PosixLayer::build_context_object ()
     std::lock_guard<std::mutex> guard (this->m_lock);
     // build Context object
     return this->build_context_object (this->m_default_workflow_id,
+        this->m_default_tweak,
         this->m_default_operation_type,
         this->m_default_operation_context,
         1,
@@ -102,6 +105,7 @@ Context PosixLayer::build_context_object ()
 
 // build_context_object call. Build Context containing all I/O classifiers to enforce request.
 Context PosixLayer::build_context_object (const long& workflow_id,
+    const long& tweak,
     const int& operation_type,
     const int& operation_context,
     const uint64_t& operation_size,
@@ -109,6 +113,7 @@ Context PosixLayer::build_context_object (const long& workflow_id,
 {
     // build Context object
     return Context { workflow_id,
+        tweak,
         operation_type,
         operation_context,
         operation_size,
@@ -146,6 +151,7 @@ ssize_t PosixLayer::write (int fd, const void* buf, size_t count)
 {
     // build Context object
     Context context = this->build_context_object (this->m_default_workflow_id,
+        this->m_default_tweak,
         static_cast<int> (POSIX::write),
         this->m_default_operation_context,
         count,
@@ -188,6 +194,7 @@ ssize_t PosixLayer::pwrite (int fd, const void* buf, size_t count, off_t offset)
 {
     // build Context object
     Context context = this->build_context_object (this->m_default_workflow_id,
+        m_default_tweak,
         static_cast<int> (POSIX::pwrite),
         this->m_default_operation_context,
         count,
@@ -232,6 +239,7 @@ ssize_t PosixLayer::pwrite64 (int fd, const void* buf, size_t size, off64_t offs
 {
     // build Context object
     Context context = this->build_context_object (this->m_default_workflow_id,
+        this->m_default_tweak,
         static_cast<int> (POSIX::pwrite64),
         this->m_default_operation_context,
         size,
@@ -278,6 +286,7 @@ ssize_t PosixLayer::read (int fd, void* buf, size_t count)
 {
     // build Context object
     Context context = this->build_context_object (this->m_default_workflow_id,
+        this->m_default_tweak,
         static_cast<int> (POSIX::read),
         this->m_default_operation_context,
         count,
@@ -342,6 +351,7 @@ ssize_t PosixLayer::pread (int fd, void* buf, size_t count, off_t offset)
 {
     // build default Context object with custom
     Context context = this->build_context_object (this->m_default_workflow_id,
+        this->m_default_tweak,
         static_cast<int> (POSIX::pread),
         this->m_default_operation_context,
         count,
@@ -408,6 +418,7 @@ ssize_t PosixLayer::pread64 (int fd, void* buf, size_t size, off64_t offset)
 {
     // build default Context object with custom
     Context context = this->build_context_object (this->m_default_workflow_id,
+        this->m_default_tweak,
         static_cast<int> (POSIX::pread64),
         this->m_default_operation_context,
         size,
