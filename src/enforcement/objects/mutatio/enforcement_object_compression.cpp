@@ -53,6 +53,8 @@ void CompressionObject::obj_enforce (const Ticket& ticket, Result& result)
             case MUTATIO::decode:
                 snappy::Uncompress((const char*) ticket.get_buffer(), ticket.get_buffer_size(), &s);
                 break;
+            default:
+                throw std::runtime_error ("Invalid context type for compression.");
         }
         result.set_content(s.length(), (const unsigned char*) s.data());
         result.set_content_size(s.length());

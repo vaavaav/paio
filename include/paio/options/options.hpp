@@ -140,7 +140,7 @@ inline std::string option_default_data_plane_stage_name ()
  */
 inline std::filesystem::path main_path ()
 {
-    return "../files/";
+    return "/home/gsd/PI2223/ext/paio/files/";
 }
 
 /**
@@ -245,7 +245,7 @@ const bool option_define_default_object_differentiation_on_create_channel { true
  * considered for channel selection, and the respective classification and differentiation of I/O
  * requests.
  */
-const bool option_default_channel_differentiation_workflow { false };
+const bool option_default_channel_differentiation_workflow { true };
 
 /**
  * option_default_channel_differentiation_operation_type: Defines if the operation type I/O
@@ -259,7 +259,7 @@ const bool option_default_channel_differentiation_operation_type { false };
  * classifier should be considered for channel selection, and the respective classification and
  * differentiation of I/O requests.
  */
-const bool option_default_channel_differentiation_operation_context { true };
+const bool option_default_channel_differentiation_operation_context { false };
 
 /**
  * option_default_enforcement_object_differentiation_operation_type: Defines if the operation type
@@ -318,7 +318,7 @@ const ClassifierType option_default_statistic_classifier { ClassifierType::opera
  * differentiation). Some of the available options are PAIO_GENERAL, POSIX, and LSM_KVS_SIMPLE. The
  * full list is available in the ContextType enum class at the context_propagation_definitions.hpp.
  */
-const ContextType option_default_context_type { ContextType::PAIO_GENERAL };
+const ContextType option_default_context_type { ContextType::MUTATIO };
 
 } // namespace paio::options
 

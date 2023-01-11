@@ -253,10 +253,11 @@ const int kvs_size = 10;
  */
 enum class MUTATIO {
    encode = 1,
-   decode = 2
+   decode = 2,
+   no_op = 0
 };
 
-const int mutatio_size = 2;
+const int mutatio_size = 3;
 
 } // namespace paio::core
 

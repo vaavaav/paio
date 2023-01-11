@@ -13,7 +13,7 @@ namespace paio::enforcement {
 class CompressionObject : public EnforcementObject {
 
 private:
-    long m_object_id { 0 };
+    long m_object_id { 1 };
 
 public:
     /**

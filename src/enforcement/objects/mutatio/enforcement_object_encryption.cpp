@@ -10,12 +10,14 @@ namespace paio::enforcement {
 // EncryptionObject default constructor.
 EncryptionObject::EncryptionObject ()
 {
+    xts_init(64);
     Logging::log_debug ("EncryptionObject default constructor.");
 }
 
 // EncryptionObject parameterized constructor.
 EncryptionObject::EncryptionObject (const long& object_id) : m_object_id { object_id }
 {
+    xts_init(64);
     Logging::log_debug ("EncryptionObject parameterized constructor.");
 }
 
@@ -46,13 +48,19 @@ void EncryptionObject::obj_enforce (const Ticket& ticket, Result& result)
     // if the Ticket contains request's data/metadata, it will be copied to the Result object
     if (has_content) {
         auto tweak = ticket.get_tweak();
+        unsigned char tweak_[16] = {0};
+        memcpy(tweak_, &tweak, sizeof tweak);
+        result.set_content(ticket.get_buffer_size(), ticket.get_buffer());
+        result.set_content_size(ticket.get_buffer_size());
         switch (static_cast<paio::core::MUTATIO> (ticket.get_operation_type ())) {
-            case MUTATIO::encode:
-                xts_encode (this->key, (unsigned char*) (&tweak), result.get_content(), static_cast<unsigned char*>(ticket.get_buffer()), ticket.get_buffer_size());
+            case MUTATIO::encode: 
+                xts_encode (this->key, tweak_, result.get_content(), static_cast<unsigned char*>(ticket.get_buffer()), ticket.get_buffer_size());
                 break;
             case MUTATIO::decode:
-                xts_decode (this->key, (unsigned char*) (&tweak), result.get_content(), static_cast<unsigned char*>(ticket.get_buffer()), ticket.get_buffer_size());
+                xts_decode (this->key, tweak_, result.get_content(), static_cast<unsigned char*>(ticket.get_buffer()), ticket.get_buffer_size());
                 break;
+            default:
+                throw std::runtime_error ("Invalid context type for compression.");
         }
     }
 }

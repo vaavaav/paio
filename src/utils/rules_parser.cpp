@@ -212,6 +212,8 @@ long RulesParser::convert_mutatio_definitions (const std::string& general_defini
             return static_cast<long> (MUTATIO::encode);
         case "decode"_:
             return static_cast<long> (MUTATIO::decode);
+        case "no_op"_:
+            return static_cast<long> (MUTATIO::no_op);
         default:
             throw std::runtime_error (
                 "Unknown MUTATIO function (hint: the request-type/request-context field does "
